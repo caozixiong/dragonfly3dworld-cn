@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=source
 set BUILDDIR=build
-set SPHINXPROJ=dragonfly-cn-doc
+set SPHINXPROJ=dragonfly-cn
 
 if "%1" == "" goto help
 
