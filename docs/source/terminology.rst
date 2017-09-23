@@ -19,5 +19,27 @@
    Lightning            光照
    Texture              纹理
    Object               目标/目标对象
+   Projection           投影
+   Transformation       变换
+   Shading              着色
+   Texture Mapping      纹理贴图
+   Blending             混合
+   Window Leveling      窗位
+   MIP                  最大密度投影
+   Dataset              数据集
+   Registration         配准
+   Dilation             膨胀
+   Erosion              腐蚀
+   Opening              开运算
+   Closing              闭运算
+   Active shape         主动轮廓
+   Slice                切片
+   Ray Tracing          光线追查法
+   Ray Casting          光线投射法
+   Study               检查
+   Series               序列
+   QUERY                查询
+   RETRIEVE             获取
+   Profile              剖面线
    ===================  ================
 
