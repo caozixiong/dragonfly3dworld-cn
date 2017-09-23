@@ -7,7 +7,7 @@ Dragonfly支持两类基本操作：对视景的显示与对目标的处理。 �
 Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样式。工作区主要包含以下几个部分：
 
 左侧栏：
-The left side of the DragonflyI interface is the default location for different tool panels, such as Manipulate, Window Leveling, Probe, and Scene Views Properties
+Dragonfly的左侧栏是各种工具面板的默认位置，例如图像操控、窗宽窗位、探针、场景视图属性等。
 
 .. figure:: images\ApplicationWindow_Left.png
 
