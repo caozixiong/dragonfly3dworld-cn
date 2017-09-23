@@ -2,7 +2,7 @@
 熟悉Dragonfly的界面
 -----------------------
 
-Dragonfly is a powerful, multifaceted software platform for processing, visualizing, manipulating, and analyzing scientific datasets acquired by CT, micro-CT, microscopy, FIB-SEM, and other modalities. Supported activities can be grouped under two basic concepts — visual display and object processing — and the application is designed in such a way that all of these activities can be accessed from the main application window. Tools to manipulate images and make basic measurements, as well as advanced functionality such as segmentation, are available in the tool panels on the left. Views of imported data and processed objects are contained within scenes in the workspace. Data properties and settings, as well as related process controls, can be found on the right.
+Dragonfly支持两种基本的操作：视觉显示与对象处理。 软件设计的风格是让所有的操作都可以从主界面中实现。 Tools to manipulate images and make basic measurements, as well as advanced functionality such as segmentation, are available in the tool panels on the left. Views of imported data and processed objects are contained within scenes in the workspace. Data properties and settings, as well as related process controls, can be found on the right.
 
 The Dragonfly workspace, which consists of the following major sections, is flexible and gives you several options to work the way that you want. See Workspaces.
 
