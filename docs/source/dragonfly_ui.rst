@@ -9,7 +9,7 @@ The Dragonfly workspace, which consists of the following major sections, is flex
 左侧栏：
 The left side of the DragonflyI interface is the default location for different tool panels, such as Manipulate, Window Leveling, Probe, and Scene Views Properties
 
-.. figure:: images\ApplicationWindow_Left.png
+.. figure:: .\images\ApplicationWindow_Left.png
    :scale: 50 %
    :alt: left side bar
 
