@@ -14,6 +14,7 @@
    intro
    basics
    dragonfly_ui
+   terminology
 
 
 索引与搜索
