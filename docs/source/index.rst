@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-欢迎查看Dragonfly中文用户手册!
+Dragonfly 用户手册
 =======================================
 
 .. toctree::
@@ -12,7 +12,6 @@
    :numbered:
 
    intro
-   basics
    dragonfly_ui
    terminology
 
