@@ -9,6 +9,6 @@ Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样�
 左侧栏：
 Dragonfly的左侧栏是各种工具面板的默认位置，例如图像操控、窗宽窗位、探针、场景视图属性等。
 
-.. figure:: images\ApplicationWindow_Left.png
+.. figure:: ./images/ApplicationWindow_Left.png
 
    上图为Dragonfly用户界面左侧栏（默认设置）.
