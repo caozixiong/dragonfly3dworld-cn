@@ -37,7 +37,7 @@
    Slice                切片
    Ray Tracing          光线追查法
    Ray Casting          光线投射法
-   Study               检查
+   Study                检查
    Series               序列
    QUERY                查询
    RETRIEVE             获取
