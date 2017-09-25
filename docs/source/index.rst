@@ -13,6 +13,22 @@ Dragonfly 用户手册
 
    intro
    dragonfly_ui
+   import_image
+   import_dicom
+   workwith_dataset
+   registration_tools
+   image_processing
+   add_annotation
+   segmentation
+   segmentation_ml
+   quantification
+   mesh
+   animation
+   save_data
+   preferences
+   extension
+   file_format
+   copyright_trademark
    terminology
 
 
