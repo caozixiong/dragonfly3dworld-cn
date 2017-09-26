@@ -8,12 +8,22 @@ Dragonfly支持两类基本操作：对视景的显示与对目标的处理。 �
 ~~~~~~~~~~~~~~~~
 Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样式。工作区主要包含以下几个部分：
 
-左侧栏：
-Dragonfly的左侧栏是各种工具面板的默认位置，例如图像操控、窗宽窗位、探针、场景视图属性等。
+左侧：Dragonfly的左侧栏是各种工具面板的默认位置，例如图像操控、窗宽窗位、探针、场景视图属性等。默认设置的左侧栏布局如下图所示：
 
-.. figure:: images/ApplicationWindow_Left.png
+.. figure:: Images/ApplicationWindow_Left.png
 
-上图为Dragonfly用户界面左侧栏（默认设置）.
+中间：Dragonfly工作区的中间部分包含了场景（用以显示图像文件、表面模型文件、感兴趣区、及其他目标对象），如下图所示：
+
+.. figure:: Images/Interface/ApplicationWindow_Middle.png
+
+右侧：Dragonfly工作区的右侧是数据属性与设置面板，让用户选择目标对象并查看其相关的信息与设置，如下图所示：
+
+.. figure:: Images/Interface/ApplicationWindow_Right.png
+
+底部：Dragonfly工作区的底部是状态栏和其他一些面板，例如动画制作和Python控制台，如下图所示：
+
+.. figure:: Images/Interface/ApplicationWindow_Bottom.png
+
 
 数据属性与设置面板
 ~~~~~~~~~~~~~~~~~~~~~~~
