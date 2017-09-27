@@ -29,6 +29,7 @@ Dragonfly 用户手册
    extension
    file_format
    copyright_trademark
+   video_tutorial
    terminology
 
 
