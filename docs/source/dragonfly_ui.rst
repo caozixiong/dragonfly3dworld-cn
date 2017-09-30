@@ -32,7 +32,7 @@ Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样�
 
 .. figure:: Images/Interface/DatasetPropertiesAndSettingsPanel.png
 
-*A. 对象筛选按钮  B. 当前对象列表  C. 操作选项  D. 信息与设置*
+*A. 选择对象类型  B. 对象列表  C. 导入导出操作  D. 详细信息与设置*
 
 **对象选择**
 
@@ -56,6 +56,19 @@ Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样�
 
 .. figure:: Images/Interface/DatasetProperties_ObjectList.png
 
-*A. 在场景中显示  B. 颜色或伪彩  C. 缩略图或对象类型  D. 名称  E. 在3D视图中可见*
+*A. 是否在场景中显示  B. 颜色或伪彩  C. 缩略图或对象类型  D. 对象名称  E. 是否在3D视图中显示*
 
 对象名称后面的 * 号表示该对象被修改过，或者是新创建的数据。
+
+**修改颜色**
+
+通过点击对象名称左边的“颜色或伪彩”按钮，你可以修改标注、感兴趣区、表面模型的颜色，以及体绘制的伪彩传递函数（Transfer Function或LUT, Loot-up Table，如下图所示）。
+
+.. figure:: Images/Interface/lut-dialog.png
+
+双击对象名称可以对其进行修改。
+
+拖拽对象名称，可以重新进行排序：
+
+.. figure:: Images/Interface/ManagingObjects_01.png
+
