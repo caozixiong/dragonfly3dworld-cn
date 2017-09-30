@@ -83,3 +83,4 @@ Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样�
 Dragonfly可以在同一个窗口调整所有对象的透明度：
 
 .. figure:: Images/Interface/opacity-console.png
+
