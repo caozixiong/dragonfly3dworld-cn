@@ -32,4 +32,12 @@ Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样�
 
 .. figure:: Images/Interface/DatasetPropertiesAndSettingsPanel.png
 
-*A. 选择器 B. 对象列表 C. 操作选项 D. 信息与设置*
+*A. 对象选择 B. 对象列表 C. 操作选项 D. 信息与设置*
+
+**对象选择**
+
+数据属性与设置面板最顶部的按钮可以决定哪些对象显示在下方的列表中。
+
+.. figure:: Images/Interface/Filters.png
+
+*A. 数据集 B. 标注 C. 感兴趣区 D. 复合感兴趣区 E. 表面模型 F. 可见对象*
