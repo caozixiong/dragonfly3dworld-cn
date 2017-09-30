@@ -75,6 +75,7 @@ Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样�
 导入导出及删除操作
 
 .. figure:: Images/Interface/PropertiesAndSettings_Icons.png
+
     *A. 透明度设置 B. 复制 C. 导出 D. 导入 E. 删除*
 
 **透明度设置**
