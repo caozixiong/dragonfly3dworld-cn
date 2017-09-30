@@ -68,7 +68,7 @@ Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样�
 
 双击对象名称可以对其进行修改。
 
-拖拽对象名称，可以重新进行排序：
+拖拽对象名称来改变其在列表中的位置，可以对列表重新进行排序：
 
 .. figure:: Images/Interface/ManagingObjects_01.png
 
