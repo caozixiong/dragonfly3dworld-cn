@@ -4,24 +4,23 @@
 
 Dragonfly可导入各种常见图像数据文件，包括标准的图像文件，原始数据，TIFF序列，以及多种商业软件使用的格式。这些文件可以从本地或网络存储设备导入，也可以从CD/DVD、USB移动存储设备导入。
 
-对于三维体数据，Dragonfly支持以下文件格式：
+对于三维体数据，Dragonfly支持以下的文件格式（请注意同样的后缀名在其它软件中可能有其它格式）：
 
 图像序列（后缀名为.tif, .tiff, .jpeg, .jpg, .png, .bmp, .dib等）：图像序列为一系列的二维图像，每个二维图像代表三维空间中的一层（故又称为切片、层面、断层）。注意：每层的二维图像必须具有相同的大小和类型，才能形成一个可以进行体绘制的三维图像。
 
-三维TIFF格式 (后缀名为.tif, .tiff)：这种格式与图像序列不同，因为一个三维TIFF文件可以保存整个三维的数据。多数三维TIFF格式包含的是单个三维图像，也有些软件可以在一个三维TIFF文件里面打包多个三维图像。
+三维TIFF格式 (后缀名为.tif, .tiff)：这种格式与图像序列不同，因为一个三维TIFF文件可以保存整个三维的数据。多数三维TIFF格式包含的是单个三维图像，也有些软件可以在一个三维TIFF文件里面打包放入多个三维图像。
 
-Raw data (.raw and .pic extensions)… A basic file format that saves the active image or stack as raw pixel data without a header.
+原始RAW格式(后缀名为.raw 和 .pic)：基本的数据格式，图像以原始像素点（体素点）的方式保存，没有文件头。其它软件的RAW文件可能会带有文件头，如果要导入这样的RAW文件，可以设置忽略头部的N个字节（N需要事先知道）。
 
-DAT (.dat extension)… Header file for accompanying raw data.
+DAT格式 (后缀名为.dat)：和RAW文件配合使用的头文件，用文本格式描述图像的大小类型等信息，不包含像素点/体素点本身的二进制信息。其它软件的.dat文件可能有其它含义。
 
-Analyze (.hdr extension with accompanying .img extension)… Analyze 7.5 files. The Analyze file format was developed at the Mayo Clinic as part of a software package of the same name. Datasets in this format consist of small HDR files that describe the data and IMG files with the raw data. Although there are multiple versions of this format, Dragonfly only supports the 7.5 variant.
+Analyze格式 (后缀名.hdr配合.img文件)：由Mayo Clinic发布，作为同名软件Analyze使用的专属格式。这种格式使用一个HDR头文件，原始数据保存在IMG文件里。请注意这种格式有多个版本，Dragonfly仅支持Analyze 7.5版。
 
-MRC (.mrc extension)… A file format for electron density that has become an industry standard in Cryo-electron microscopy. It was developed by the MRC (Medical Research Council) Laboratory of Molecular Biology.
+MRC格式(后缀名.mrc)：由MRC (Medical Research Council) 分子生物学实验室发布，Cryo-EM的通用文件格式，表示电子密度的分布。
 
-REK (.rek extension)… Fraunhofer raw data file format.
+REK格式(后缀名.rek)：Fraunhofer发布的文件格式。
 
-TXM (.txm extension)… A file format used by ZEISS Xradia 3D X-ray Microscopes. Dragonfly Pro supports TXM files using unsigned char, unsigned short integer, or float data. Contact Object Research Systems for information about the availability of Dragonfly Pro.
+TXM格式(后缀名.txm)：ZEISS Xradia 三维X射线显微镜使用的文件格式。Dragonfly Pro支持TXM文件（unsigned char, unsigned short integer, or float）。请联系ORS公司以获得更多关于Dragonfly Pro的信息。
 
-ORS object file (.ORSObject)… Proprietary binary formatted files in which data is written sequentially and XML (Extensible Markup Language) is appended after the binary data.
+ORSObject格式(后缀名.ORSObject)：Dragonfly专属的格式，头信息由XML格式写入，二进制数据随后。
 
-NOTE See Image File Formats for more information about the supported files.
