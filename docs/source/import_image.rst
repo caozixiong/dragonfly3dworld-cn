@@ -8,7 +8,7 @@ Dragonfly可导入各种常见图像数据文件，包括标准的图像文件�
 
 图像序列（后缀名为.tif, .tiff, .jpeg, .jpg, .png, .bmp, .dib等）：图像序列为一系列的二维图像，每个二维图像代表三维空间中的一层（故又称为切片、层面、断层）。注意：每层的二维图像必须具有相同的大小和类型，才能形成一个可以进行体绘制的三维图像。
 
-TIFF (.tif, .tiff extensions)… This file format differs from an image stack in that the entire volume is stored in a single file. Although the majority of TIFFs contain just a single image stored in a directory, some applications can generate multi-directory TIFFs that contain multiple images.
+三维TIFF格式 (后缀名为.tif, .tiff)：这种格式与图像序列不同，因为一个三维TIFF文件可以保存整个三维的数据。多数三维TIFF格式包含的是单个三维图像，也有些软件可以在一个三维TIFF文件里面打包多个三维图像。
 
 Raw data (.raw and .pic extensions)… A basic file format that saves the active image or stack as raw pixel data without a header.
 
