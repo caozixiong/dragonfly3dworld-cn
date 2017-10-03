@@ -32,7 +32,7 @@ Dragonfly的图像加载器（Image Loader）是一个向导，即通过一系�
 
 第一步是通过“导入数据集”的对话框来选择需要导入的文件，如下图：
 
-.. figure:: Images/Import%20Datasets/ImportData_01.png
+.. figure:: Images/Import Datasets/ImportData_01.png
     导入数据集对话框
 
 注意：Dragonfly提供了两个不同的加载器- 图像加载器（Image Loader）和表面模型加载器（Mesh Loader）。在首选项设置中可以设置默认的加载器为其中之一，或者不设置默认加载器。如果设置默认加载器为图像加载器，那么Dragonfly软件在启动的时候即自动打开图像加载器对话框。

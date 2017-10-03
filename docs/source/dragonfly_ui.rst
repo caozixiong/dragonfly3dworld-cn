@@ -32,7 +32,7 @@ Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样�
 
 .. figure:: Images/Interface/DatasetPropertiesAndSettingsPanel.png
 
-*A. 选择对象类型  B. 对象列表  C. 导入导出操作  D. 详细信息与设置*
+    *A. 选择对象类型  B. 对象列表  C. 导入导出操作  D. 详细信息与设置*
 
 **对象选择**
 
@@ -40,7 +40,7 @@ Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样�
 
 .. figure:: Images/Interface/Filters.png
 
-*A. 数据集  B. 标注  C. 感兴趣区  D. 复合感兴趣区  E. 表面模型  F. 可见对象*
+    *A. 数据集  B. 标注  C. 感兴趣区  D. 复合感兴趣区  E. 表面模型  F. 可见对象*
 
 点击“数据集”按钮则只显示数据集，点击“感兴趣区”按钮则只显示感兴趣区，点击“表面模型”按钮则只显示表面模型，以此类推。
 
@@ -56,7 +56,7 @@ Dragonfly的工作区配置非常灵活，可以让你定制成最喜欢的样�
 
 .. figure:: Images/Interface/DatasetProperties_ObjectList.png
 
-*A. 是否在场景中显示  B. 颜色或伪彩  C. 缩略图或对象类型  D. 对象名称  E. 是否在3D视图中显示*
+    *A. 是否在场景中显示  B. 颜色或伪彩  C. 缩略图或对象类型  D. 对象名称  E. 是否在3D视图中显示*
 
 对象名称后面的 * 号表示该对象被修改过，或者是新创建的数据。
 
