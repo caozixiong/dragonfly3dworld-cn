@@ -31,6 +31,7 @@ Dragonfly 用户手册
    copyright_trademark
    video_tutorial
    terminology
+   references
 
 
 索引与搜索
