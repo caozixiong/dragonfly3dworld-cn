@@ -32,7 +32,7 @@ Dragonfly的图像加载器（Image Loader）是一个向导，即通过一系�
 
 第一步是通过“导入数据集”的对话框来选择需要导入的文件，如下图：
 
-.. figure:: Images/Import\Datasets/ImportData_01.png
+.. figure:: Images/Import%20Datasets/ImportData_01.png
 
     导入数据集对话框
 
@@ -47,7 +47,7 @@ Dragonfly的图像加载器（Image Loader）是一个向导，即通过一系�
 
 下图是主要标准图像文件（例如TIFF,BMP,JPEG等）的预览。如果图像本身比预览窗口大，则会按比例进行缩小，但纵横比会保持。
 
-.. figure:: Images/Import\Datasets/ImportData_02.png
+.. figure:: Images/Import%20Datasets/ImportData_02.png
 
     标准图像预览窗口
 
