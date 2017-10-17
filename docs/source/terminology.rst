@@ -9,38 +9,39 @@
    ===================  ================
    英文                 中文翻译
    ===================  ================
-   Manipulate           操控
-   Volume Rendering     体绘制
-   Mesh                 表面网格模型
-   Viewport             视口
-   Visual               视景
-   View                 视图
-   Scene                场景
-   Widget               控件
-   Lightning            光照
-   Texture              纹理
-   Object               目标/目标对象
-   Projection           投影
-   Transformation       变换
-   Shading              着色
-   Texture Mapping      纹理贴图
+   Active shape         主动轮廓
    Blending             混合
-   Window Leveling      窗位
-   MIP                  最大密度投影
+   Closing              闭运算
    Dataset              数据集
-   Registration         配准
    Dilation             膨胀
    Erosion              腐蚀
+   Lightning            光照
+   Manipulate           操控
+   Mesh                 表面网格模型
+   MIP                  最大密度投影
+   Object               目标/目标对象
    Opening              开运算
-   Closing              闭运算
-   Active shape         主动轮廓
-   Slice                切片
-   Ray Tracing          光线追查法
-   Ray Casting          光线投射法
-   Study                检查
-   Series               序列
-   QUERY                查询
-   RETRIEVE             获取
    Profile              剖面线
+   Projection           投影
+   QUERY                查询
+   Ray Casting          光线投射法
+   Ray Tracing          光线追查法
+   Registration         配准
+   RETRIEVE             获取
+   Scene                场景
+   Series               序列
+   Shading              着色
+   Slice                切片
+   Study                检查
+   Texture              纹理
+   Texture Mapping      纹理贴图
+   Transformation       变换
+   View                 视图
+   Viewport             视口
+   Visual               视景
+   Volume Rendering     体绘制
+   Widget               控件
+   Window Leveling      窗位
+
    ===================  ================
 
