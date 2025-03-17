@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Hub</title>
+    <!-- TailwindCSS 通过CDN引入 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.3.3/tailwind.min.js"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phosphor-icons/2.0.2/phosphor-icons.min.js"></script>
+    <style>
+        /* 自定义样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --transition-standard: all 0.2s ease-in-out;
+            --shadow-elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            --shadow-elevation-2: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+            --shadow-elevation-3: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .card-link {
+            transition: var(--transition-standard);
+            border: 1px solid transparent;
+        }
+
+        .card-link:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-elevation-2);
+            border-color: rgba(var(--accent-color), 0.3);
+        }
+
+        .section-header {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 32px;
+            height: 2px;
+            background-color: currentColor;
+            opacity: 0.7;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            transition: var(--transition-standard);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+
+        /* 黑暗模式特定变量 */
+        .dark {
+            --accent-color: 99, 102, 241;
+        }
+
+        /* 浅色模式特定变量 */
+        .light {
+            --accent-color: 79, 70, 229;
+        }
+
+        /* 渐入动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-container {
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .section-container:nth-child(1) { animation-delay: 0.1s; }
+        .section-container:nth-child(2) { animation-delay: 0.2s; }
+        .section-container:nth-child(3) { animation-delay: 0.3s; }
+
+        /* 页面滚动平滑过渡 */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 light">
+    <!-- 页面容器 -->
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- 顶部导航 -->
+        <header class="flex justify-between items-center mb-12">
+            <div>
+                <h1 class="text-2xl font-semibold">Knowledge Hub</h1>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">技术文档资源中心</p>
+            </div>
+            
+            <!-- 深色模式切换 -->
+            <button id="theme-toggle" aria-label="切换深色/浅色模式" class="theme-toggle p-2 rounded-full bg-gray-100 dark:bg-gray-800">
+                <i class="ph-sun text-xl hidden dark:inline-block"></i>
+                <i class="ph-moon text-xl inline-block dark:hidden"></i>
+            </button>
+        </header>
+
+        <!-- 主内容区 -->
+        <main class="space-y-16">
+            
+            <!-- Datasheets 部分 -->
+            <section id="datasheets" class="section-container">
+                <h2 class="section-header text-xl font-medium mb-6">Datasheets</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- 示例链接 - 实际使用时替换href和内容 -->
+                    <a href="datasheets/product-a.html" target="_blank" class="card-link block p-4 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 p-2 rounded-md bg-indigo-50 dark:bg-indigo-900/30">
+                                <i class="ph-file-text text-indigo-600 dark:text-indigo-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">产品 A 规格说明</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">技术参数和性能指标详解</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="datasheets/product-b.html" target="_blank" class="card-link block p-4 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 p-2 rounded-md bg-indigo-50 dark:bg-indigo-900/30">
+                                <i class="ph-file-text text-indigo-600 dark:text-indigo-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">产品 B 数据手册</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">完整规格与接口定义</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="datasheets/reference.html" target="_blank" class="card-link block p-4 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 p-2 rounded-md bg-indigo-50 dark:bg-indigo-900/30">
+                                <i class="ph-file-text text-indigo-600 dark:text-indigo-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">技术参考资料</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">标准参考文档集合</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="mt-4 text-sm">
+                    <a href="datasheets/index.html" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center">
+                        查看所有数据手册
+                        <i class="ph-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </section>
+            
+            <!-- Tutorials 部分 -->
+            <section id="tutorials" class="section-container">
+                <h2 class="section-header text-xl font-medium mb-6">Tutorials</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- 示例链接 - 实际使用时替换href和内容 -->
+                    <a href="tutorials/getting-started.html" target="_blank" class="card-link block p-4 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 p-2 rounded-md bg-green-50 dark:bg-green-900/30">
+                                <i class="ph-graduation-cap text-green-600 dark:text-green-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">入门指南</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">新用户快速上手教程</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="tutorials/advanced-features.html" target="_blank" class="card-link block p-4 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 p-2 rounded-md bg-green-50 dark:bg-green-900/30">
+                                <i class="ph-lightbulb text-green-600 dark:text-green-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">高级功能教程</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">深入了解系统功能与技巧</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="tutorials/troubleshooting.html" target="_blank" class="card-link block p-4 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 p-2 rounded-md bg-green-50 dark:bg-green-900/30">
+                                <i class="ph-bug text-green-600 dark:text-green-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">故障排除</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">常见问题解决方案</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="mt-4 text-sm">
+                    <a href="tutorials/index.html" target="_blank" class="text-green-600 dark:text-green-400 hover:underline inline-flex items-center">
+                        查看所有教程
+                        <i class="ph-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </section>
+            
+            <!-- Macros 部分 -->
+            <section id="macros" class="section-container">
+                <h2 class="section-header text-xl font-medium mb-6">Macros</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- 示例链接 - 实际使用时替换href和内容 -->
+                    <a href="macros/automation.html" target="_blank" class="card-link block p-4 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 p-2 rounded-md bg-blue-50 dark:bg-blue-900/30">
+                                <i class="ph-code text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">自动化宏</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">提高工作流程效率的宏命令</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="macros/data-processing.html" target="_blank" class="card-link block p-4 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 p-2 rounded-md bg-blue-50 dark:bg-blue-900/30">
+                                <i class="ph-brackets-curly text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">数据处理宏</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">批量数据处理解决方案</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="macros/custom-functions.html" target="_blank" class="card-link block p-4 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 p-2 rounded-md bg-blue-50 dark:bg-blue-900/30">
+                                <i class="ph-function text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">自定义函数</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">扩展功能的自定义函数库</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="mt-4 text-sm">
+                    <a href="macros/index.html" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center">
+                        查看所有宏
+                        <i class="ph-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </section>
+        </main>
+        
+        <!-- 页脚 -->
+        <footer class="mt-20 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-600 dark:text-gray-400">
+            <p>&copy; 2025 Knowledge Hub. 保留所有权利。</p>
+        </footer>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取主题切换按钮
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // 检测系统偏好
+            const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // 设置初始主题（跟随系统）
+            if (prefersDarkMode) {
+                document.body.classList.remove('light');
+                document.body.classList.add('dark');
+            }
+            
+            // 点击切换主题
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark');
+                document.body.classList.toggle('light');
+            });
+            
+            // 实现内容的懒加载
+            const lazyLoadSections = function() {
+                const sections = document.querySelectorAll('.section-container');
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animationPlayState = 'running';
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1
+                });
+                
+                sections.forEach(section => {
+                    section.style.animationPlayState = 'paused';
+                    observer.observe(section);
+                });
+            };
+            
+            // 调用懒加载函数
+            lazyLoadSections();
+        });
+    </script>
+</body>
+</html>
