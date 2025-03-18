@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dragonfly 2022.1 发布说明</title>
+  <!-- TailwindCSS 3.x CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+    integrity="sha512-papNMpDrz4M3r7I+Xn+8ifvcxAJd4opU7akxXEpIByNuP08v6YpA5C2K1HfQgfC8bUMWBl4fJ5qS+2O9S7r8+g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- 自定义动画和过渡 -->
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease-in-out both;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+  <!-- 顶部导航 -->
+  <header class="sticky top-0 bg-white dark:bg-gray-800 shadow z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold">Dragonfly 2022.1 发布说明</h1>
+      <nav>
+        <ul class="flex space-x-4">
+          <li>
+            <a href="#overview" class="hover:text-blue-500 transition-transform transform hover:scale-105">概览</a>
+          </li>
+          <li>
+            <a href="#features" class="hover:text-blue-500 transition-transform transform hover:scale-105">新功能</a>
+          </li>
+          <li>
+            <a href="#details" class="hover:text-blue-500 transition-transform transform hover:scale-105">详情</a>
+          </li>
+        </ul>
+      </nav>
+      <!-- 深色/浅色模式切换按钮 -->
+      <button id="theme-toggle" class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-transform transform hover:scale-110" title="切换深色/浅色模式">
+        <i id="theme-icon" class="fas fa-moon"></i>
+      </button>
+    </div>
+  </header>
+  
+  <!-- 主体内容 -->
+  <main class="max-w-7xl mx-auto px-4 py-8 space-y-12">
+    <!-- 概览区 -->
+    <section id="overview" class="fade-in">
+      <h2 class="text-3xl font-semibold mb-4">概览</h2>
+      <p class="mb-2">欢迎阅读 Dragonfly 2022.1 版本的发布说明。本版本整合了 NASA 的 Porous Microstructure Analysis (PuMA) 软件以及多项基于深度学习的图像处理功能，旨在为科研用户提供更高效、精准的图像分析和模拟工具。</p>
+      <p>本次更新主要包含以下内容：</p>
+      <ul class="list-disc ml-6 mt-2 space-y-1">
+        <li>Porous Microstructure Analysis (PuMA) 集成与增强</li>
+        <li>Noise2Void 去噪深度学习模型</li>
+        <li>U-Net SR 超分辨率模型</li>
+        <li>深度学习工具的更新和改进</li>
+        <li>分割向导、模型生成器及标量生成器的优化</li>
+        <li>向量场生成、CT 重建、MC X-Ray 等模块的提升</li>
+      </ul>
+    </section>
+    
+    <!-- 新功能区 -->
+    <section id="features" class="fade-in">
+      <h2 class="text-3xl font-semibold mb-4">新功能和产品增强</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 功能卡片：PuMA -->
+        <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition-all duration-300">
+          <h3 class="text-2xl font-bold mb-2">Porous Microstructure Analysis (PuMA)</h3>
+          <p class="mb-2">集成 NASA 的 PuMA 软件，支持生成模拟微结构和计算孔隙率、表面积、导热性、渗透性等材料属性。</p>
+          <a href="#puma" class="text-blue-500 hover:underline">了解更多 &rarr;</a>
+        </div>
+        <!-- 功能卡片：Noise2Void -->
+        <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition-all duration-300">
+          <h3 class="text-2xl font-bold mb-2">Noise2Void 去噪模型</h3>
+          <p class="mb-2">采用 Noise2Void 方法直接在待去噪数据上训练，有效降低图像中的盐和胡椒噪声。</p>
+          <a href="#noise2void" class="text-blue-500 hover:underline">了解更多 &rarr;</a>
+        </div>
+        <!-- 功能卡片：U-Net SR -->
+        <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition-all duration-300">
+          <h3 class="text-2xl font-bold mb-2">U-Net SR 超分辨率模型</h3>
+          <p class="mb-2">基于改进的 U-Net 架构，通过混合梯度损失实现低分辨率到高分辨率图像的高效转换。</p>
+          <a href="#unetsr" class="text-blue-500 hover:underline">了解更多 &rarr;</a>
+        </div>
+        <!-- 功能卡片：深度学习更新 -->
+        <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition-all duration-300">
+          <h3 class="text-2xl font-bold mb-2">深度学习工具更新</h3>
+          <p class="mb-2">新增可自定义的类权重、详细的训练进度展示以及图像序列视频导出功能，优化模型训练体验。</p>
+          <a href="#deeplearning" class="text-blue-500 hover:underline">了解更多 &rarr;</a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 详细功能介绍 -->
+    <section id="details" class="fade-in space-y-12">
+      <!-- PuMA 详细 -->
+      <div id="puma">
+        <h2 class="text-3xl font-semibold mb-4">Porous Microstructure Analysis (PuMA)</h2>
+        <p>PuMA 功能主要用于模拟多孔材料的微观结构，并计算其物理属性。用户可以通过“工作流程 &gt; PuMA”生成随机纤维或球体样本，并利用 Solver 计算连续介质下的渗透性、导热性、局部材料取向等参数。</p>
+        <a href="https://puma-nasa.readthedocs.io/en/latest/" target="_blank" class="text-blue-500 hover:underline">官方文档 &rarr;</a>
+      </div>
+      <!-- Noise2Void 详细 -->
+      <div id="noise2void">
+        <h2 class="text-3xl font-semibold mb-4">Noise2Void 去噪深度学习模型</h2>
+        <p>该模型通过直接对噪声图像进行训练，替换每个像素为图像中其它像素的值，从而有效降低图像噪声，特别适合于盐和胡椒噪声的去除。</p>
+        <a href="https://arxiv.org/abs/1811.10980" target="_blank" class="text-blue-500 hover:underline">查看论文 &rarr;</a>
+      </div>
+      <!-- U-Net SR 详细 -->
+      <div id="unetsr">
+        <h2 class="text-3xl font-semibold mb-4">U-Net SR 超分辨率模型</h2>
+        <p>利用改进的 U-Net 架构和混合梯度损失，该模型可以将低分辨率图像转换为高分辨率图像，要求训练数据中高分辨率图像尺寸为输入图像的整数倍。</p>
+        <a href="https://arxiv.org/abs/1911.09428v1" target="_blank" class="text-blue-500 hover:underline">查看论文 &rarr;</a>
+      </div>
+      <!-- 深度学习更新详细 -->
+      <div id="deeplearning">
+        <h2 class="text-3xl font-semibold mb-4">深度学习工具更新</h2>
+        <p>本次更新增加了类权重的自定义设置、训练进度信息展示、以及导出图表和视觉反馈视频的功能，全面提升了深度学习模块的训练与监控体验。</p>
+      </div>
+      <!-- 此处可继续添加其他模块的详细介绍 -->
+    </section>
+  </main>
+  
+  <!-- 页脚 -->
+  <footer class="bg-gray-200 dark:bg-gray-800 py-6">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="mb-2">作者：Dragonfly</p>
+      <p class="mb-2">
+        <a href="https://x.com/ai_dragonfly" target="_blank" class="text-blue-500 hover:underline">Twitter/X</a>
+      </p>
+      <p class="text-sm">© 2022 Dragonfly. 保留所有权利.</p>
+    </div>
+  </footer>
+  
+  <!-- 切换深色/浅色模式的脚本 -->
+  <script>
+    // 根据系统偏好设置初始主题
+    const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (userPrefersDark) {
+      document.documentElement.classList.add('dark');
+      document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+    }
+    // 切换按钮事件
+    document.getElementById('theme-toggle').addEventListener('click', function(){
+      document.documentElement.classList.toggle('dark');
+      if(document.documentElement.classList.contains('dark')){
+        document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+      } else {
+        document.getElementById('theme-icon').classList.replace('fa-sun', 'fa-moon');
+      }
+    });
+  </script>
+</body>
+</html>
