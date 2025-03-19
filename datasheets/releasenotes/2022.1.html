@@ -1,159 +1,1257 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="scroll-smooth">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dragonfly 2022.1 发布说明</title>
-  <!-- TailwindCSS 3.x CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
-    integrity="sha512-papNMpDrz4M3r7I+Xn+8ifvcxAJd4opU7akxXEpIByNuP08v6YpA5C2K1HfQgfC8bUMWBl4fJ5qS+2O9S7r8+g==" 
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- 自定义动画和过渡 -->
-  <style>
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-in {
-      animation: fadeIn 0.8s ease-in-out both;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragonfly 2022.1 发行说明</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --bg-tertiary: #eaeaed;
+            --text-primary: #000000;
+            --text-secondary: #333333;
+            --text-tertiary: #6e6e73;
+            --accent-primary: #0066cc;
+            --accent-secondary: #5ac8fa;
+            --border-color: #d2d2d7;
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --header-height: 60px;
+            --sidebar-width: 280px;
+            --transition-speed: 0.3s;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2c2c2e;
+            --bg-tertiary: #3a3a3c;
+            --text-primary: #ffffff;
+            --text-secondary: #ebebf0;
+            --text-tertiary: #aeaeb2;
+            --accent-primary: #0a84ff;
+            --accent-secondary: #64d2ff;
+            --border-color: #38383c;
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        header {
+            height: var(--header-height);
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: background-color var(--transition-speed), border-color var(--transition-speed);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 32px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .toggle-theme {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        .toggle-theme:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            padding: 8px;
+        }
+
+        aside {
+            width: var(--sidebar-width);
+            background-color: var(--bg-secondary);
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: transform var(--transition-speed), background-color var(--transition-speed);
+            z-index: 99;
+            padding: 20px 0;
+        }
+
+        .sidebar-title {
+            padding: 0 20px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: background-color 0.2s;
+            font-size: 0.95rem;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-links li a:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .nav-links li a.active {
+            color: var(--accent-primary);
+            background-color: var(--bg-tertiary);
+            border-left-color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        main {
+            margin-left: var(--sidebar-width);
+            margin-top: var(--header-height);
+            padding: 30px;
+            transition: margin-left var(--transition-speed);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: var(--text-tertiary);
+            font-size: 1.1rem;
+            max-width: 80%;
+        }
+
+        .version-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--accent-primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            position: relative;
+            top: -3px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--bg-primary);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-primary);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+
+        .feature-title {
+            flex: 1;
+        }
+
+        .feature-title h3 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .feature-title p {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+        }
+
+        .feature-content {
+            padding: 20px;
+        }
+
+        .feature-content p {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .feature-image {
+            width: 100%;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-section {
+            margin-bottom: 40px;
+        }
+
+        .feature-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--accent-primary);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .feature-list li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+            font-size: 0.95rem;
+        }
+
+        .feature-list li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-primary);
+            border-radius: 50%;
+        }
+
+        .copyright {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 992px) {
+            main {
+                padding: 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+
+            aside {
+                transform: translateX(-100%);
+            }
+
+            aside.show {
+                transform: translateX(0);
+            }
+
+            main {
+                margin-left: 0;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .section-header p {
+                max-width: 100%;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 15px;
+            }
+
+            .feature-card {
+                max-width: 100%;
+            }
+        }
+
+        .content-block {
+            background-color: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .content-block h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .toc {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 10px;
+        }
+
+        .toc a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        table th {
+            background-color: var(--bg-tertiary);
+            font-weight: 600;
+        }
+
+        table tr:nth-child(even) {
+            background-color: var(--bg-secondary);
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box {
+            background-color: rgba(10, 132, 255, 0.1);
+            border-left: 4px solid var(--accent-primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--accent-primary);
+        }
+
+        .workflow-steps {
+            counter-reset: step;
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .workflow-steps li {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+
+        .workflow-steps li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background-color: var(--accent-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
-  <!-- 顶部导航 -->
-  <header class="sticky top-0 bg-white dark:bg-gray-800 shadow z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-      <h1 class="text-2xl font-bold">Dragonfly 2022.1 发布说明</h1>
-      <nav>
-        <ul class="flex space-x-4">
-          <li>
-            <a href="#overview" class="hover:text-blue-500 transition-transform transform hover:scale-105">概览</a>
-          </li>
-          <li>
-            <a href="#features" class="hover:text-blue-500 transition-transform transform hover:scale-105">新功能</a>
-          </li>
-          <li>
-            <a href="#details" class="hover:text-blue-500 transition-transform transform hover:scale-105">详情</a>
-          </li>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Dragonfly 2022.1 发行说明</h1>
+        </div>
+        <div>
+            <button class="mobile-menu-button" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <button class="toggle-theme" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <aside id="sidebar">
+        <div class="sidebar-title">版本说明</div>
+        <ul class="nav-links">
+            <li><a href="#overview" class="active">概述</a></li>
+            <li><a href="#puma">多孔微结构分析 (PuMA)</a></li>
+            <li><a href="#noise2void">Noise2Void 深度学习降噪</a></li>
+            <li><a href="#unet-sr">U-Net SR 超分辨率模型</a></li>
+            <li><a href="#deep-learning">深度学习更新</a></li>
+            <li><a href="#segmentation">分割向导</a></li>
+            <li><a href="#scalar-generator">标量生成器更新</a></li>
+            <li><a href="#vector-fields">数据集矢量场</a></li>
+            <li><a href="#anisotropy">各向异性矢量场</a></li>
+            <li><a href="#tortuosity">图形曲率分析</a></li>
+            <li><a href="#ct-reconstruction">CT 重建</a></li>
+            <li><a href="#other-updates">其他功能更新</a></li>
+            <li><a href="#system-requirements">系统要求</a></li>
         </ul>
-      </nav>
-      <!-- 深色/浅色模式切换按钮 -->
-      <button id="theme-toggle" class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-transform transform hover:scale-110" title="切换深色/浅色模式">
-        <i id="theme-icon" class="fas fa-moon"></i>
-      </button>
-    </div>
-  </header>
-  
-  <!-- 主体内容 -->
-  <main class="max-w-7xl mx-auto px-4 py-8 space-y-12">
-    <!-- 概览区 -->
-    <section id="overview" class="fade-in">
-      <h2 class="text-3xl font-semibold mb-4">概览</h2>
-      <p class="mb-2">欢迎阅读 Dragonfly 2022.1 版本的发布说明。本版本整合了 NASA 的 Porous Microstructure Analysis (PuMA) 软件以及多项基于深度学习的图像处理功能，旨在为科研用户提供更高效、精准的图像分析和模拟工具。</p>
-      <p>本次更新主要包含以下内容：</p>
-      <ul class="list-disc ml-6 mt-2 space-y-1">
-        <li>Porous Microstructure Analysis (PuMA) 集成与增强</li>
-        <li>Noise2Void 去噪深度学习模型</li>
-        <li>U-Net SR 超分辨率模型</li>
-        <li>深度学习工具的更新和改进</li>
-        <li>分割向导、模型生成器及标量生成器的优化</li>
-        <li>向量场生成、CT 重建、MC X-Ray 等模块的提升</li>
-      </ul>
-    </section>
-    
-    <!-- 新功能区 -->
-    <section id="features" class="fade-in">
-      <h2 class="text-3xl font-semibold mb-4">新功能和产品增强</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- 功能卡片：PuMA -->
-        <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition-all duration-300">
-          <h3 class="text-2xl font-bold mb-2">Porous Microstructure Analysis (PuMA)</h3>
-          <p class="mb-2">集成 NASA 的 PuMA 软件，支持生成模拟微结构和计算孔隙率、表面积、导热性、渗透性等材料属性。</p>
-          <a href="#puma" class="text-blue-500 hover:underline">了解更多 &rarr;</a>
-        </div>
-        <!-- 功能卡片：Noise2Void -->
-        <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition-all duration-300">
-          <h3 class="text-2xl font-bold mb-2">Noise2Void 去噪模型</h3>
-          <p class="mb-2">采用 Noise2Void 方法直接在待去噪数据上训练，有效降低图像中的盐和胡椒噪声。</p>
-          <a href="#noise2void" class="text-blue-500 hover:underline">了解更多 &rarr;</a>
-        </div>
-        <!-- 功能卡片：U-Net SR -->
-        <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition-all duration-300">
-          <h3 class="text-2xl font-bold mb-2">U-Net SR 超分辨率模型</h3>
-          <p class="mb-2">基于改进的 U-Net 架构，通过混合梯度损失实现低分辨率到高分辨率图像的高效转换。</p>
-          <a href="#unetsr" class="text-blue-500 hover:underline">了解更多 &rarr;</a>
-        </div>
-        <!-- 功能卡片：深度学习更新 -->
-        <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition-all duration-300">
-          <h3 class="text-2xl font-bold mb-2">深度学习工具更新</h3>
-          <p class="mb-2">新增可自定义的类权重、详细的训练进度展示以及图像序列视频导出功能，优化模型训练体验。</p>
-          <a href="#deeplearning" class="text-blue-500 hover:underline">了解更多 &rarr;</a>
-        </div>
-      </div>
-    </section>
-    
-    <!-- 详细功能介绍 -->
-    <section id="details" class="fade-in space-y-12">
-      <!-- PuMA 详细 -->
-      <div id="puma">
-        <h2 class="text-3xl font-semibold mb-4">Porous Microstructure Analysis (PuMA)</h2>
-        <p>PuMA 功能主要用于模拟多孔材料的微观结构，并计算其物理属性。用户可以通过“工作流程 &gt; PuMA”生成随机纤维或球体样本，并利用 Solver 计算连续介质下的渗透性、导热性、局部材料取向等参数。</p>
-        <a href="https://puma-nasa.readthedocs.io/en/latest/" target="_blank" class="text-blue-500 hover:underline">官方文档 &rarr;</a>
-      </div>
-      <!-- Noise2Void 详细 -->
-      <div id="noise2void">
-        <h2 class="text-3xl font-semibold mb-4">Noise2Void 去噪深度学习模型</h2>
-        <p>该模型通过直接对噪声图像进行训练，替换每个像素为图像中其它像素的值，从而有效降低图像噪声，特别适合于盐和胡椒噪声的去除。</p>
-        <a href="https://arxiv.org/abs/1811.10980" target="_blank" class="text-blue-500 hover:underline">查看论文 &rarr;</a>
-      </div>
-      <!-- U-Net SR 详细 -->
-      <div id="unetsr">
-        <h2 class="text-3xl font-semibold mb-4">U-Net SR 超分辨率模型</h2>
-        <p>利用改进的 U-Net 架构和混合梯度损失，该模型可以将低分辨率图像转换为高分辨率图像，要求训练数据中高分辨率图像尺寸为输入图像的整数倍。</p>
-        <a href="https://arxiv.org/abs/1911.09428v1" target="_blank" class="text-blue-500 hover:underline">查看论文 &rarr;</a>
-      </div>
-      <!-- 深度学习更新详细 -->
-      <div id="deeplearning">
-        <h2 class="text-3xl font-semibold mb-4">深度学习工具更新</h2>
-        <p>本次更新增加了类权重的自定义设置、训练进度信息展示、以及导出图表和视觉反馈视频的功能，全面提升了深度学习模块的训练与监控体验。</p>
-      </div>
-      <!-- 此处可继续添加其他模块的详细介绍 -->
-    </section>
-  </main>
-  
-  <!-- 页脚 -->
-  <footer class="bg-gray-200 dark:bg-gray-800 py-6">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="mb-2">作者：Dragonfly</p>
-      <p class="mb-2">
-        <a href="https://x.com/ai_dragonfly" target="_blank" class="text-blue-500 hover:underline">Twitter/X</a>
-      </p>
-      <p class="text-sm">© 2022 Dragonfly. 保留所有权利.</p>
-    </div>
-  </footer>
-  
-  <!-- 切换深色/浅色模式的脚本 -->
-  <script>
-    // 根据系统偏好设置初始主题
-    const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (userPrefersDark) {
-      document.documentElement.classList.add('dark');
-      document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
-    }
-    // 切换按钮事件
-    document.getElementById('theme-toggle').addEventListener('click', function(){
-      document.documentElement.classList.toggle('dark');
-      if(document.documentElement.classList.contains('dark')){
-        document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
-      } else {
-        document.getElementById('theme-icon').classList.replace('fa-sun', 'fa-moon');
-      }
-    });
-  </script>
+    </aside>
+
+    <main>
+        <section id="overview" class="section active">
+            <div class="section-header">
+                <h2>Dragonfly 2022.1 新功能概述</h2>
+                <p>了解 Dragonfly 和 Dragonfly Pro 2022.1 软件版本中的新功能、产品增强和其他改进。</p>
+            </div>
+
+            <div class="content-block">
+                <h3>版本亮点</h3>
+                <p>Dragonfly 2022.1 版本标志着 NASA 的多孔微结构分析 (PuMA) 软件的集成，用于执行材料响应模拟，以及引入直接在要降噪的数据上进行训练的 noise-to-void 降噪功能。此版本还包括对深度学习工具、分割向导和 Dragonfly 的 CT 重建模块的重大增强，以及用于检查模拟结果和建模各向异性的新矢量场选项、图形曲率分析、粒子粗糙度计算和摘要报告。</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="feature-title">
+                            <h3>多孔微结构分析</h3>
+                            <p>集成NASA的PuMA软件</p>
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <p>用于多孔介质微结构计算有效材料性质和执行材料响应模拟的新工具。能够生成模拟现实材料的人工微结构并计算形态特性。</p>
+                        <a href="#puma">了解更多 →</a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-braille"></i>
+                        </div>
+                        <div class="feature-title">
+                            <h3>Noise2Void 降噪</h3>
+                            <p>革新性深度学习降噪模型</p>
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <p>新的降噪方法，直接在要降噪的数据上进行训练，无需配对的低噪声目标或独立的噪声图像对。</p>
+                        <a href="#noise2void">了解更多 →</a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                        <div class="feature-title">
+                            <h3>U-Net SR</h3>
+                            <p>超分辨率深度学习模型</p>
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <p>用于超分辨率的修改 U-Net 网络架构，采用混合梯度损失，减少参数数量，提高性能并加速推理。</p>
+                        <a href="#unet-sr">了解更多 →</a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="feature-title">
+                            <h3>深度学习更新</h3>
+                            <p>增强工具功能</p>
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <p>可选择的类权重、模型生成器对话框更改，以及将绘制图表和视觉反馈图像序列导出为视频文件的选项。</p>
+                        <a href="#deep-learning">了解更多 →</a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-vector-square"></i>
+                        </div>
+                        <div class="feature-title">
+                            <h3>矢量场更新</h3>
+                            <p>从数据集生成矢量场</p>
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <p>用于从数据集生成矢量场的选项，有助于进一步检查来自 PuMA 透气率模拟的压力和速度数据。</p>
+                        <a href="#vector-fields">了解更多 →</a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <div class="feature-title">
+                            <h3>3D可视化增强</h3>
+                            <p>改进的显示选项</p>
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <p>新的虚拟地板面板，核心样本和有机材料的新3D预设，以及使用黑色背景创建戏剧性图像的双色预设。</p>
+                        <a href="#other-updates">了解更多 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3>目录</h3>
+                <ul class="toc">
+                    <li><a href="#puma">多孔微结构分析 (PuMA)</a></li>
+                    <li><a href="#noise2void">Noise2Void 深度学习降噪模型</a></li>
+                    <li><a href="#unet-sr">U-Net SR 深度学习超分辨率模型</a></li>
+                    <li><a href="#deep-learning">深度学习更新</a></li>
+                    <li><a href="#segmentation">分割向导</a></li>
+                    <li><a href="#scalar-generator">标量生成器更新</a></li>
+                    <li><a href="#vector-fields">数据集矢量场</a></li>
+                    <li><a href="#anisotropy">各向异性矢量场</a></li>
+                    <li><a href="#tortuosity">图形曲率分析</a></li>
+                    <li><a href="#ct-reconstruction">CT 重建</a></li>
+                    <li><a href="#other-updates">其他功能更新</a></li>
+                    <li><a href="#system-requirements">系统要求</a></li>
+                </ul>
+            </div>
+
+            <div class="copyright">
+                <p>© 2022 Object Research Systems (ORS) Inc. ORS 是 Comet Group 的成员。保留所有权利。</p>
+            </div>
+        </section>
+
+        <section id="puma" class="section">
+            <div class="section-header">
+                <h2>多孔微结构分析 (PuMA)</h2>
+                <p>用于多孔介质微结构的有效材料性质计算和材料响应模拟的综合工具集。</p>
+            </div>
+
+            <div class="feature-section">
+                <p>为了计算有效材料性质并在多孔介质微结构上执行材料响应模拟，此软件版本包括 NASA 的多孔微结构分析 (PuMA) 软件的首次集成。</p>
+                <p>PuMA 能够生成模拟现实材料的人工微结构，并计算形态特性，如孔隙率、体积分数、孔径和表面积。其他功能包括从连续体确定有效导热率、渗透率、曲率和扩散率，以及确定局部材料方向的技术。</p>
+                
+                <div class="two-columns">
+                    <img src="/api/placeholder/600/400" alt="PuMA 模拟结果" class="feature-image">
+                    <div>
+                        <h3>主要功能</h3>
+                        <ul class="feature-list">
+                            <li>生成随机纤维和随机球体标本</li>
+                            <li>计算连续体曲率、渗透率、导热率</li>
+                            <li>确定局部方向</li>
+                            <li>发布曲率浓度场、渗透率速度和压力的 3D 图像</li>
+                            <li>发布导热率的温度场和通量</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>样本生成器</h3>
+                <p>您可以使用 PuMA 的样本生成器生成随机纤维和随机球体样本。您可以为数据集选择大小和有效孔隙率，以及指定其他参数，如纤维的半径、长度、方向和交叉。球体的参数包括直径和交叉。</p>
+                
+                <h3>求解器</h3>
+                <p>PuMA 求解器的输入包括生成的随机纤维和球体样本，以及保存为多 ROI 的现实材料和分割的数据集。您可以计算连续体曲率、渗透率、导热率，以及确定局部方向。此外，您可以发布曲率浓度场、渗透率速度和压力的 3D 图像，以及导热率的温度场和通量。</p>
+                
+                <div class="info-box">
+                    <strong>系统要求</strong>
+                    <p>以下是使用 PuMA 的推荐最低要求，具体取决于所研究的材料性质：</p>
+                    <ul>
+                        <li>16-32 GB RAM 用于小型至中型模拟</li>
+                        <li>32+ GB RAM 用于更大型模拟</li>
+                    </ul>
+                </div>
+                
+                <h3>许可</h3>
+                <p>此数值模拟和材料性质表征功能，正在持续开发中，可供非商业许可持有者使用，也包含在 Dragonfly 2022.1 版本的商业许可持有者中。但是，商业许可持有者需要升级其当前许可证以继续在未来版本的 Dragonfly 中使用 PuMA。请联系销售部门了解有关许可条款和费用的所有问题。</p>
+                
+                <h3>参考资料</h3>
+                <p>有关 PuMA 的更多信息，请参阅以下出版物：</p>
+                <ul class="feature-list">
+                    <li>Joseph C. Ferguson, Francesco Panerai, Arnaud Borner, Nagi N. Mansour, PuMA: the Porous Microstructure Analysis software. SoftwareX, Vol. 7, January–June 2018, Pages 81-87</li>
+                    <li>Joseph C. Ferguson, Federico Semeraro, John M. Thornton, Francesco Panerai, Arnaud Borner, Nagi N. Mansour, Update 3.0 to "PuMA: the Porous Microstructure Analysis software", (PII:S2352711018300281). SoftwareX, Vol. 15, July 2021, 100775</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="noise2void" class="section">
+            <div class="section-header">
+                <h2>Noise2Void 深度学习降噪模型</h2>
+                <p>革命性的深度学习降噪方法，直接在要降噪的数据上进行训练。</p>
+            </div>
+
+            <div class="feature-section">
+                <p>训练用于降噪的深度学习模型通常依赖于将高噪声输入图像与低噪声输出图像配对，或者使用一种称为 Noise2Noise (N2N) 的方法使用嘈杂图像的独立对。如果无法获取低噪声或嘈杂的训练目标，这些方法可能会受到限制，这在生物医学图像研究中经常是这种情况。作为训练用于降噪的深度学习模型的额外选择，此 Dragonfly 版本包括应用一种称为 Noise2Void (N2V) 的方法的选项，其中训练直接在要降噪的数据上进行。</p>
+                
+                <div class="two-columns">
+                    <img src="/api/placeholder/600/400" alt="原始图像与降噪版本对比" class="feature-image">
+                    <div>
+                        <h3>Noise2Void 降噪的优势</h3>
+                        <ul class="feature-list">
+                            <li>其他经典深度学习降噪模型，如噪声到低噪声和噪声到噪声，如果无法获取所需的输出，可能无法使用。对于 Noise2Void 模型，每个像素都被同一图像中的另一个像素替换。</li>
+                            <li>训练 N2V 模型通常不需要很多训练轮次。</li>
+                            <li>N2V 模型非常适合减少椒盐噪声。</li>
+                        </ul>
+                        <p>您应该注意，在某些情况下，N2V 可能无法超过具有更多训练信息的其他方法。例如，如果存在结构化噪声，降噪性能可能会下降。</p>
+                    </div>
+                </div>
+                
+                <p>选择 <strong>人工智能 > 自定义深度模型架构 > Noise2Void</strong> 以打开 Noise2Void 对话框。该对话框包含多个选项卡 — 应用和训练 — 让您配置和完成模型训练工作流程，以及将训练好的模型应用于降噪数据集。</p>
+                
+                <p>训练选项卡上的选项可让您生成新模型，然后在选定的数据集上对其进行训练。您应该注意，大多数功能 — 模型、输入、数据增强、训练参数和预览 — 与深度学习工具对话框中可用的功能相同。</p>
+            </div>
+        </section>
+
+        <section id="unet-sr" class="section">
+            <div class="section-header">
+                <h2>U-Net SR 深度学习超分辨率模型</h2>
+                <p>优化的超分辨率网络架构，提供更高性能和更快推理。</p>
+            </div>
+
+            <div class="feature-section">
+                <p>"超分辨率"是指通过提高其分辨率来改善图像质量的过程。在大多数情况下，经过训练的超分辨率模型可以将图像从低分辨率 (LR) 转换为高分辨率 (HR)，同时保持清晰的边缘并保留重要细节。</p>
+                
+                <p>此软件版本包括一个修改的 U-Net 网络架构 — U-Net SR — 用于超分辨率，采用混合梯度损失，减少参数数量。与其他超分辨率算法相比，此方法可提供更好的性能并加速推理。</p>
+                
+                <p>U-Net SR 可在超分辨率架构的模型生成器对话框中使用。您应该注意，已为此模型预配置了一组初始训练参数，在大多数情况下应该效果良好，并且您的训练数据必须包括是输入图像的精确倍数的高分辨率输出图像，例如 2 倍、4 倍、6 倍等。设置模型参数时，您需要输入输出图像的缩放值。</p>
+                
+                <div class="info-box">
+                    <strong>注意</strong>
+                    <p>只有满足选定缩放值的数据集才会在训练并选择训练数据时出现在输入选项卡的输出下拉菜单中。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="deep-learning" class="section">
+            <div class="section-header">
+                <h2>深度学习更新</h2>
+                <p>Dragonfly 深度学习工具的多项增强和新功能。</p>
+            </div>
+
+            <div class="feature-section">
+                <p>Dragonfly 的深度学习工具更新包括可选择的类权重、培训和模型生成器对话框的更改，以及将绘制图表和视觉反馈图像序列导出为视频文件的选项。</p>
+                
+                <h3>可选择的类权重</h3>
+                <p>在某些情况下，训练数据集可能存在显著的类别不平衡，或者所有相位可能具有相似的灰度值。为了帮助使用深度学习工具改进此类情况下的语义分割模型训练，此软件版本允许您选择数据比例和自定义类权重，以解决类别不平衡问题并加速训练。</p>
+                <p>类权重可在模型概述面板的类别框中选择。</p>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>类权重</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>统一</td>
+                                <td>无论标签如何，都均匀应用类权重。</td>
+                            </tr>
+                            <tr>
+                                <td>从标签计算</td>
+                                <td>类权重将在训练时重新计算，作为训练数据中标签的反比例。</td>
+                            </tr>
+                            <tr>
+                                <td>自定义</td>
+                                <td>让您设置自定义类权重。如果没有很多标签可用，您可以增加权重。您可以降低背景和/或不重要特征的权重。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>训练进度信息</h3>
+                <p>现在，训练对话框包括有关正在训练的模型和模型输入的详细信息，可提供视觉反馈以监控训练。信息框包括模型描述、训练参数、数据增强设置和有关训练数据的信息。</p>
+                
+                <h3>导出视觉反馈</h3>
+                <p>现在，对于启用了检查点缓存和视觉反馈选项的模型，可以从训练结果对话框中导出图表和视觉反馈图像序列作为视频文件。</p>
+                
+                <h3>模型生成器</h3>
+                <p>此软件版本包括对模型生成器对话框的细微重构。输入维度选项现在列为 2D、2.5D 和 3D。</p>
+            </div>
+        </section>
+
+        <section id="segmentation" class="section">
+            <div class="section-header">
+                <h2>分割向导</h2>
+                <p>简化和增强的图像分割工作流程。</p>
+            </div>
+
+            <div class="feature-section">
+                <p>此软件版本中，分割向导有多项新功能和更新。</p>
+                
+                <h3>帧角色分配</h3>
+                <p>帧的角色分配已扩展，包括"未使用"、"训练"、"验证"和"评估"选项。之前，这些角色仅限于"混合"和"监控"。</p>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>设置</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>未使用</td>
+                                <td>不会考虑该帧。</td>
+                            </tr>
+                            <tr>
+                                <td>混合</td>
+                                <td>该帧将被随机分为训练、验证和评估补丁。这是帧的默认设置。</td>
+                            </tr>
+                            <tr>
+                                <td>训练</td>
+                                <td>该帧将专门用于学习模型参数。</td>
+                            </tr>
+                            <tr>
+                                <td>验证</td>
+                                <td>该帧将专门用于训练期间的模型验证。仅适用于深度模型训练。</td>
+                            </tr>
+                            <tr>
+                                <td>评估</td>
+                                <td>该帧将用于计算模型分数。</td>
+                            </tr>
+                            <tr>
+                                <td>监控</td>
+                                <td>该帧将用于在训练期间显示视觉反馈。注意：只能将一个帧指定为视觉反馈。如果将第二个帧设置为"监控"，原始监控帧将自动重置为"混合"。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>帧统计</h3>
+                <p>帧统计对话框已更新，提供有关标签和每个帧的设置用法的其他信息。</p>
+                <p>单击输入选项卡上的帧框中的显示统计按钮，打开帧统计对话框。</p>
+                
+                <h3>帧名称和拟合</h3>
+                <p>您应该注意，帧名称现在出现在主视图中。您还应该注意，可以通过简单地单击帧或在输入面板上选择它来拟合帧。如果多个帧在同一切片上，也可以自动拟合它们。</p>
+                
+                <h3>数据比例类权重</h3>
+                <p>为了改进具有显著类别不平衡的情况下的语义分割模型训练，此软件版本提供了使用与标记训练数据成反比的类权重的选项。</p>
+                <p>打开设置选项卡，为训练深度模型选择数据比例类权重。如果未选中，将应用统一权重。</p>
+                
+                <h3>计算模型分数</h3>
+                <p>现在，您可以通过单击模型选项卡上的模型列表中的计算分数按钮，选择计算特定模型的分数。</p>
+            </div>
+        </section>
+
+        <section id="scalar-generator" class="section">
+            <div class="section-header">
+                <h2>标量生成器更新</h2>
+                <p>用于表征和测量物体属性的新测量方法，以及用于交叉索引的功能。</p>
+            </div>
+
+            <div class="feature-section">
+                <p>此软件版本中，标量生成器提供了一些新的测量方法来表征和测量物体属性，以及用于交叉索引的功能。</p>
+                
+                <h3>粗糙度估计</h3>
+                <p>Dragonfly 2022.1 提供了一些新的 3D 测量方法，用于估计准球形粒子或物体的表面"粗糙度"。粗糙度在各种过程中起着重要作用，例如粉末的质量保证，可以定义为真实表面与其理想光滑形式的偏差。</p>
+                <p>右键单击多 ROI，然后在弹出菜单中选择标量生成器。粗糙度估计器以及凸包表面积测量在基本测量类别中可用。</p>
+                
+                <h3>球度估计</h3>
+                <p>作为表征粒子 3D 形状的附加指标，此 Dragonfly 版本提供了利用粒子体积与表面积之间关系的球度估计器。这个比率可以快速估计 3D 球度。</p>
+                
+                <h3>Feret 测量</h3>
+                <p>现在，单切片多 ROI 的标量生成器中提供了最大和最小 Feret 以及 2D Feret 角度的测量。您应该注意，Feret 是从构成每个标记对象的生成凸包的体素中心计算的。</p>
+                
+                <h3>交叉索引</h3>
+                <p>对于带有标量值的多 ROI，新的交叉索引选项允许您将所选多 ROI 类的标签号交叉索引到另一个多 ROI 的相交类。</p>
+                <p>如下所示，您可以在标量生成器对话框中选择测量标题和交叉索引的多 ROI。</p>
+            </div>
+        </section>
+
+        <section id="vector-fields" class="section">
+            <div class="section-header">
+                <h2>数据集矢量场</h2>
+                <p>从数据集生成矢量场，用于分析模拟结果和流动数据。</p>
+            </div>
+
+            <div class="feature-section">
+                <p>此软件版本提供了从数据集生成矢量场的选项。例如，进一步检查从 Dragonfly 新的多孔微结构分析 (PuMA) 模块中发布的渗透率模拟创建的压力和速度数据。</p>
+                
+                <p>一个从 PuMA 渗透率模拟生成的矢量场如下所示。</p>
+                
+                <img src="/api/placeholder/800/500" alt="多孔网络模型中的矢量场" class="feature-image">
+                
+                <h3>创建矢量场</h3>
+                <ol class="workflow-steps">
+                    <li>右键单击您要用于生成矢量场的数据属性和设置面板中的数据集，然后在弹出菜单中选择从数据集生成矢量场。注意：您需要选择至少两个数据集才能访问菜单项。</li>
+                    <li>在选择矢量场组件对话框中，选择将提供 X、Y 和 Z 矢量的数据集。</li>
+                    <li>在矢量模量下拉菜单中选择将提供矢量模量的数据集。</li>
+                    <li>根据需要设置采样率。</li>
+                    <li>单击确定以生成矢量场。生成的矢量场作为数据属性和设置面板上的新项目出现。您可以在 3D 视图中检查矢量场。</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="anisotropy" class="section">
+            <div class="section-header">
+                <h2>各向异性矢量场</h2>
+                <p>用于确定骨骼结构特征与力学功能之间关联的 3D 建模工具。</p>
+            </div>
+
+            <div class="feature-section">
+                <p>3D 各向异性建模可以帮助确定观察到的结构特征与骨骼的力学功能之间的关联。各向异性是方向依赖性的属性，以 3D 矢量场形式呈现，其中颜色刻度表示大小或方向，密度是可配置的。下面显示了为分割的松质骨计算的矢量场示例。</p>
+                
+                <div class="two-columns">
+                    <img src="/api/placeholder/400/300" alt="按大小映射的表面法线各向异性" class="feature-image">
+                    <img src="/api/placeholder/400/300" alt="按方向映射的表面法线各向异性" class="feature-image">
+                </div>
+                
+                <p>右键单击数据属性和设置面板中所需的感兴趣区域或网格，然后选择 3D 建模 > 创建各向异性矢量场，打开对话框。</p>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>设置</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>算法</td>
+                                <td>表面法线算法基于构建由一组垂直于网格面的矢量填充的表面网格，其大小与局部网格面积成比例。</td>
+                            </tr>
+                            <tr>
+                                <td>采样</td>
+                                <td>让您选择采样设置：
+                                    <br>区域框... 定义用于计算矢量场的区域。
+                                    <br>间距... 确定分析区域中随机点之间的距离。
+                                    <br>网格大小... 指示当前网格大小，计算为：区域框长度/间距。</td>
+                            </tr>
+                            <tr>
+                                <td>邻居</td>
+                                <td>让您选择采样设置：
+                                    <br>影响半径... 定义内部将评估各向异性的内核大小或基本体积。
+                                    <br>各向异性评估... 让您选择评估方法 — 基于投影或基于特征值。</td>
+                            </tr>
+                            <tr>
+                                <td>网格平滑</td>
+                                <td>确定在计算各向异性之前，从输入 ROI 获得的网格将平滑的次数。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="info-box">
+                    <strong>骨骼分析模块</strong>
+                    <p>Dragonfly 还提供了专用的骨骼分析模块，包括皮质骨和松质骨的自动分割引导工作流程、形态测量、各向异性测量的其他选项，以及体积分数映射。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tortuosity" class="section">
+            <div class="section-header">
+                <h2>图形曲率分析</h2>
+                <p>用于测量多孔介质中路径偏离的分析工具。</p>
+            </div>
+
+            <div class="feature-section">
+                <p>作为计算图形的新功能，您可以分析选定输入和输出框之间的图形曲率和喉部加权曲率。您应该注意，曲率是多孔介质偏离由直的平行毛细管组成的理想系统的度量。曲率分析和喉部加权分析结果 — 平均值、最小值、最大值和标准差 — 如下所示。</p>
+                
+                <div class="two-columns">
+                    <img src="/api/placeholder/400/300" alt="曲率分析结果" class="feature-image">
+                    <img src="/api/placeholder/400/300" alt="喉部加权曲率分析结果" class="feature-image">
+                </div>
+                
+                <h3>分析图形曲率</h3>
+                <ol class="workflow-steps">
+                    <li>添加定义要分析的图形段的输入和输出的框形状。</li>
+                    <li>右键单击数据属性和设置面板中所需的图形，然后在弹出菜单中选择图形曲率分析。</li>
+                    <li>选择所需的输入和输出框。</li>
+                    <li>单击确定以计算所选段内的曲率测量。</li>
+                </ol>
+                
+                <h3>分析图形喉部加权曲率</h3>
+                <ol class="workflow-steps">
+                    <li>添加定义要分析的图形段的输入和输出的框形状。</li>
+                    <li>右键单击数据属性和设置面板中所需的图形，然后在弹出菜单中选择图形喉部加权曲率分析。</li>
+                    <li>选择用于计算图形的感兴趣区域，以及所需的输入和输出框。</li>
+                    <li>单击确定以计算图形所选段内的喉部加权曲率测量。</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="ct-reconstruction" class="section">
+            <div class="section-header">
+                <h2>CT 重建</h2>
+                <p>增强的 CT 重建功能，支持并行束投影和锥束投影。</p>
+            </div>
+
+            <div class="feature-section">
+                <p>此软件版本具有 CT 重建对话框的重构，以及 RTK 的集成，用于重建并行束投影和添加 SART 用于重建锥束投影。您应该注意，RTK 是基于 Insight Toolkit (ITK) 的开源软件包。</p>
+                
+                <p>选择工作流程 > CT 重建，打开 CT 重建对话框。</p>
+                
+                <p>输入图像... 让您选择要重建的投影数据集。<br>
+                几何采集... 让您从文本文件导入几何采集参数或手动输入几何信息。<br>
+                重建引擎... 让您选择重建引擎 — RTK 或 TomoPy — 以及用于重建投影数据的算法和其他设置。您应该注意，此软件版本包括同时代数重建技术 (SART) 迭代算法的实现，用于重建锥束投影。<br>
+                此外，RTK 重建引擎和 FDK 算法现在可用于并行束重建。</p>
+                
+                <p>查找旋转中心... 打开 CT 旋转查找器对话框，您可以在其中找到并应用最佳旋转中心偏移。<br>
+                预处理... 预处理选项让您选择应用平场校正、中值滤波和其他校正以改善图像质量。可用选项现在包括多点分段平场校正选项，用于去除可能影响基于 CT 的测量的环形伪影。<br>
+                预览... 让您以所选设置计算预览，以及从所选预览导入设置。<br>
+                重建... 让您以所选设置重建投影。您可以选择自动将计算的重建加载到 Dragonfly 中，或者重建并保存所选数据集。如果您的系统内存不足以加载重建数据集，则可能需要后者。</p>
+            </div>
+        </section>
+
+        <section id="other-updates" class="section">
+            <div class="section-header">
+                <h2>其他功能更新</h2>
+                <p>Dragonfly 2022.1 中的各种其他增强和改进。</p>
+            </div>
+
+            <div class="feature-section">
+                <h3>MC X-Ray</h3>
+                <p>对于 MC X-Ray，此软件版本包括显示 BSE 和 EDS 图的结果的选项。您应该注意，MC X-Ray 让您可以模拟材料中的电子散射，以便在定量 X 射线微分析中将 X 射线发射与组成相关联。通过模拟 X 射线光谱，可以建立执行特定分析的最佳条件，以及建立检测限或探索可能的峰重叠。</p>
+                
+                <h3>切片注册</h3>
+                <p>Dragonfly 的切片注册模块有一些更新，可让您自动对齐 3D 图像堆栈内的切片。您应该注意，构建一致的图像堆栈有助于确保后续处理和分析的准确性。</p>
+                <p>新的注册方法"金字塔方法"现在可用于注册图像切片。此注册方法通过最小化参考和目标图像切片之间的强度均方差，提供自动子像素注册。</p>
+                <p>基于特征的注册方法现在可以使用 SIFT（尺度不变特征变换）特征检测器。在这种情况下，应用关键点检测器和提取器来检测稳定的关键点并选择最强的特征。在许多情况下，SIFT 可以在杂乱和部分遮挡中识别关键点，因为它对统一缩放、方向、照明变化具有不变性，并且对仿射失真部分具有不变性。</p>
+                
+                <h3>报告生成器</h3>
+                <p>作为 Dragonfly 报告生成器的更新，您现在可以创建包含和总结来自多个分析的结果的摘要报告。</p>
+                <p>选择实用工具 > 报告生成器，打开报告生成器对话框。然后，您可以为多个样本添加分析结果，选择摘要报告模板，然后生成摘要报告。</p>
+                
+                <h3>H5 文件导入器</h3>
+                <p>对于 Dragonfly Pro 用户，此软件版本包括导入使用 Xnovo 的 GrainMapper3D 软件（*.h5 扩展名）创建的文件的改进。</p>
+                
+                <h3>图像加载器</h3>
+                <p>Dragonfly 的图像加载器现在支持 JPEG 2000，以及导入以 ORS Object 文件格式保存的图像数据的预览和设置。</p>
+                
+                <h3>布局面板</h3>
+                <p>Dragonfly 2022.1 版本的更新布局面板包括一组更全面的按钮，用于在选定场景中设置视图的数量和类型。</p>
+                
+                <h3>3D 可视化</h3>
+                <p>此软件版本中有许多新选项和设置，可帮助优化 3D 可视化。</p>
+                <ul class="feature-list">
+                    <li>虚拟地板面板：此软件版本具有新的虚拟地板面板，可让您微调地板设置。</li>
+                    <li>3D 预设：此软件版本为核心样本和有机材料提供了许多新的 3D 预设，以及双色预设，让您可以使用黑色背景创建戏剧性图像。</li>
+                    <li>剪辑框首选项：现在可以使用新的首选项"显示标题"在 3D 视图中显示或隐藏剪辑框的轴标题。</li>
+                </ul>
+                
+                <h3>ROI 绘制工具</h3>
+                <p>对于编辑自动分割的结果和其他任务，ROI 绘制面板上现在提供了新的"点击填充"笔刷。此工具根据未标记像素或体素的连接性，自动填充区域内的封闭区域。</p>
+                
+                <h3>多 ROI</h3>
+                <p>此软件版本中，多 ROI 有许多新选项，包括将类直方图导出到基于行的 CSV 文件、生成所有标记对象的质心点集，以及交叉索引。</p>
+                
+                <h3>注释</h3>
+                <p>此软件版本包括尺子、路径和形状的更新和新选项。</p>
+                <ul class="feature-list">
+                    <li>标题：对于尺子、角度、区域和其他注释，您现在可以使用增加字体大小和减小字体大小按钮，为每个注释调整标题的字体大小。</li>
+                    <li>尺子属性：您应该注意，在此软件版本中，投影尺子的方向现在描述为"左/右"和"上/下"，可选择。</li>
+                    <li>将当前视图法线对齐到尺子：尺子弹出菜单中可用，"将当前视图法线对齐"选项让您自动将当前视图对齐到所选尺子的法线。</li>
+                    <li>从路径生成管状网格：此软件版本提供了快速有效地将路径转换为管状网格的选项。</li>
+                </ul>
+                
+                <h3>宏</h3>
+                <p>此软件版本中，Dragonfly 的宏播放器有多项更新，包括简单双击编辑步骤标题和/或描述、切换动作（例如播放、停止等）以及在宏中包含深度学习模型推理的选项。</p>
+                
+                <h3>检查软件更新</h3>
+                <p>所有 Dragonfly 客户都会收到有关新软件版本的通知，其中包含新功能、性能改进、错误修复和其他重要更改。Windows 用户现在还可以定期检查新的程序版本，以确保其系统是最新的。</p>
+            </div>
+        </section>
+
+        <section id="system-requirements" class="section">
+            <div class="section-header">
+                <h2>系统要求</h2>
+                <p>运行 Dragonfly 2022.1 的硬件和软件要求。</p>
+            </div>
+
+            <div class="feature-section">
+                <p>此版本支持 Windows 和 Linux 的基本系统要求。</p>
+                
+                <div class="info-box">
+                    <strong>注意</strong>
+                    <p>您应该注意，从 Dragonfly 版本 2021.3 开始，需要 AVX 兼容 CPU。</p>
+                </div>
+                
+                <h3>第三方包</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>项目</th>
+                                <th>2022.1</th>
+                                <th>之前版本</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>TensorFlow</td>
+                                <td>2.4.1</td>
+                                <td>2.4.1</td>
+                            </tr>
+                            <tr>
+                                <td>Qt</td>
+                                <td>5.12.9</td>
+                                <td>5.12.9</td>
+                            </tr>
+                            <tr>
+                                <td>Python</td>
+                                <td>3.8.6</td>
+                                <td>3.8.6</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>公开可用的源代码</h3>
+                <p>用户可以自由下载和检查以下内容的源代码。</p>
+                
+                <h4>TensorFlow</h4>
+                <p>Dragonfly 的许多人工智能应用程序，例如深度学习工具、分割向导和使用 AI 分割，都使用 TensorFlow API 来促进深度神经网络的训练和推理。TensorFlow 是由 Google Brain 团队创建的免费开源库，广泛用于深度学习应用程序和传统机器学习。</p>
+                <p>用户可以从 <a href="#" target="_blank">https://github.com/tensorflow/tensorflow/releases/tag/v2.4.1</a> 自由下载和检查 TensorFlow 源代码。</p>
+                
+                <h4>Qt</h4>
+                <p>Dragonfly 是使用 Qt 设计和开发的，Qt 是一个用于创建图形用户界面和跨平台应用程序的免费开源工具包。Qt 是由 Qt Company（一家公开上市的公司）开发的，可在商业许可证和开源 GPL 2.0、GPL 3.0 和 LGPL 3.0 许可证下使用。</p>
+                <p>用户可以从 <a href="#" target="_blank">https://download.qt.io/official_releases/qt/5.12/5.12.9/</a> 自由下载和检查 Qt 源代码。</p>
+                
+                <h3>多孔微结构分析 (PuMA)</h3>
+                <p>Dragonfly 中集成的多孔微结构分析 (PuMA) 软件是由 NASA 的研究人员开发的，用于计算多孔介质数字化微结构的有效材料性质并执行材料响应模拟。PuMA 能够生成模拟真实材料的人工微结构，并计算简单的形态特性，如孔隙率、体积分数、孔径和比表面积。其他功能包括确定有效热导率和电导率（包括辐射和固体导电性——包括模拟后者的局部各向异性的能力）；从连续体到稀薄体系的有效扩散率和曲率；确定局部材料方向的技术，以及材料的力学性质（弹性系数）和渗透率。</p>
+                <p>PuMA 在 NASA 开源协议 (NOSA) 条款下可用，版权归美国政府所有，由国家航空航天局局长代表。</p>
+                <p>可以在官方 NASA GitHub 存储库中找到 PuMA 的稳定版本：<a href="#" target="_blank">https://github.com/nasa/puma</a></p>
+                <p>最新开发代码可以在开发 GitLab 存储库中找到：<a href="#" target="_blank">https://gitlab.com/jcfergus/puma-dev</a></p>
+                
+                <h3>扩展 Dragonfly</h3>
+                <p>Dragonfly 的无限工具箱是 Dragonfly 用户社区的开放交换平台，让您可以提交、浏览和下载实现所有图像处理或分析需求的新功能和工作流程的扩展。</p>
+                <p>选择实用工具 > 无限工具箱，打开 Dragonfly 的无限工具箱。</p>
+                
+                <h3>请求新功能</h3>
+                <p>如果您对新功能有建议，或者对现有工作流程的改进有想法，请告诉我们。</p>
+                
+                <h3>学习 Dragonfly</h3>
+                <p>您只需在 <a href="#" target="_blank">www.theobjects.com/dragonfly/</a> 快速浏览一下，就能找到一些很棒的免费资源，如我们最新的教学视频、录制的网络研讨会和用户论坛。您还可以利用下面列出的课程，进一步受益于我们培训团队的深入产品知识。</p>
+                
+                <h4>Dragonfly 工作坊</h4>
+                <p>我们的实践培训工作坊是快速入门的绝佳方式。结合深入指导和课堂练习，我们的产品专家将快速教您如何使用关键的 Dragonfly 功能和功能来优化您的图像可视化和分析任务。</p>
+                <div class="info-box">
+                    <strong>注意</strong>
+                    <p>由于对 COVID-19 的担忧，所有计划的 Dragonfly 工作坊都已推迟或取消。我们将尽快恢复我们的工作坊时间表。您可以在 http://www.theobjects.com/dragonfly/workshops.html 查看更新。</p>
+                </div>
+                
+                <h4>在线培训</h4>
+                <p>参加在线培训课程，跟随 Dragonfly 产品专家，他们将演示 Dragonfly 的功能和优势，并引导您完成专业模块。基于网络的培训可以适应个人需求和兴趣，提供互动方法，让您在众多案例研究中练习新技术。</p>
+                <div class="info-box">
+                    <strong>注意</strong>
+                    <p>在线培训可根据要求提供。联系 support@theobjects.com 了解可用性信息。</p>
+                </div>
+                
+                <h3>报告问题</h3>
+                <p>Dragonfly 包括一个集成的报告模块，让您可以在遇到导致崩溃或应用程序冻结的问题时，将评论和其他信息与生成的 DMP 和日志文件一起包含。</p>
+                <p>您应该注意，您也可以随时通过在菜单栏上选择帮助 > 报告问题来报告问题。</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Set initial theme based on system preference
+        if (prefersDarkScheme.matches) {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            document.body.setAttribute('data-theme', 'light');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                document.body.setAttribute('data-theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+        
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('show');
+        });
+        
+        // Navigation
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sections = document.querySelectorAll('.section');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                
+                // Hide all sections
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show target section
+                document.getElementById(targetId).classList.add('active');
+                
+                // Update active link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+                link.classList.add('active');
+                
+                // Hide mobile menu after navigation on mobile
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('show');
+                }
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && sidebar.classList.contains('show') && 
+                !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                sidebar.classList.remove('show');
+            }
+        });
+    </script>
 </body>
 </html>
