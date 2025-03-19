@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>骨骼分析全局测量</title>
+    <style>
+        :root {
+            --primary-color: #0366d6;
+            --border-color: #e1e4e8;
+            --bg-color: #ffffff;
+            --text-color: #24292e;
+            --secondary-text: #586069;
+            --hover-bg: #f6f8fa;
+            --header-bg: #f9f9f9;
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .navigation {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            margin-bottom: 1rem;
+        }
+
+        .navigation a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .note-box {
+            background-color: var(--hover-bg);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .note-box-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+            box-shadow: var(--card-shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--bg-color);
+        }
+
+        th {
+            background-color: var(--hover-bg);
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background-color: var(--hover-bg);
+            transition: var(--transition);
+        }
+
+        .abbr {
+            width: 10%;
+            min-width: 100px;
+        }
+
+        .measurement {
+            width: 20%;
+            min-width: 150px;
+        }
+
+        .description {
+            width: 60%;
+        }
+
+        .unit {
+            width: 10%;
+            text-align: center;
+        }
+
+        .footnote {
+            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
+            padding-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+        }
+
+        .tab-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .tab.active {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .radio-option {
+            display: block;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .radio-option:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .radio-option input {
+            margin-right: 0.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            margin-top: 2rem;
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .abbr, .measurement, .unit {
+                min-width: unset;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                flex: 1 0 auto;
+                text-align: center;
+                font-size: 0.9rem;
+                padding: 0.5rem;
+            }
+        }
+
+        /* 暗色模式支持 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #58a6ff;
+                --border-color: #30363d;
+                --bg-color: #0d1117;
+                --text-color: #c9d1d9;
+                --secondary-text: #8b949e;
+                --hover-bg: #161b22;
+                --header-bg: #161b22;
+                --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="navigation">
+                <a href="#">扩展 Dragonfly</a> &gt; <a href="#">骨骼分析</a> &gt; 全局测量
+            </div>
+            <h1>全局测量</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <p>Dragonfly 的骨骼分析向导可以计算分割区域中常见的骨骼形态测量值，如 Bouxsein 等人所述*，以及其他参数，如各向异性、骨矿物质密度和结构模型指数（有关计算测量值和在全局测量对话框中选择输入和参数的信息，请参见<a href="#">计算全局测量</a>）。</p>
+        
+        <p>* Bouxsein 等人，<a href="#">使用微型计算机断层扫描对啮齿类动物骨微结构评估的指南</a>，《骨与矿物质研究杂志》，25, 7, (1468-1486), (2010)</p>
+
+        <div class="note-box">
+            <svg class="note-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+            </svg>
+            除了可用的全局测量外，任何斜面的每个切片测量也可用（请参见<a href="#">切片测量</a>）。
+        </div>
+
+        <div class="note-box">
+            <svg class="note-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            骨矿物质密度和组织矿物质密度测量仅在 Dragonfly Pro 中可用。有关 Dragonfly Pro 可用性的信息，请联系 Comet Technologies Canada Inc.。
+        </div>
+
+        <h2>全局测量对话框中可用的全局测量</h2>
+
+        <div class="tab-container">
+            <div class="tabs">
+                <div class="tab active" onclick="openTab(event, 'tab1')">基本测量</div>
+                <div class="tab" onclick="openTab(event, 'tab2')">结构测量</div>
+                <div class="tab" onclick="openTab(event, 'tab3')">密度测量</div>
+            </div>
+
+            <div id="tab1" class="tab-content active">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="abbr">缩写</th>
+                                <th class="measurement">测量</th>
+                                <th class="description">描述</th>
+                                <th class="unit">单位</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>BS</td>
+                                <td>骨表面</td>
+                                <td>是输入"小梁骨"ROI 的表面，可以用行进立方体方法或加权体素近似计算。这些计算方法可用，如下所示。</td>
+                                <td>(默认单位)<sup>2</sup></td>
+                            </tr>
+                            <tr>
+                                <td>BS/BV</td>
+                                <td>特定骨表面</td>
+                                <td>是骨表面 (BS) 与骨体积 (BV) 的比率。<br>注意：表面积与体积比率或"特定骨表面"可以作为表征结构复杂性的有用参数。</td>
+                                <td>(默认单位)<sup>-1</sup></td>
+                            </tr>
+                            <tr>
+                                <td>BS/TV</td>
+                                <td>骨表面密度</td>
+                                <td>是骨表面 (BS) 与总体积 (TV) 的比率。</td>
+                                <td>(默认单位)<sup>-1</sup></td>
+                            </tr>
+                            <tr>
+                                <td>BV</td>
+                                <td>骨体积</td>
+                                <td>是所选"皮质骨"和"小梁骨"ROI 的体积，计算如下：<br>BV = (体素体积) × (体素数量)，<br>其中体素体积 = X 间距 × Y 间距 × Z 间距</td>
+                                <td>(默认单位)<sup>3</sup></td>
+                            </tr>
+                            <tr>
+                                <td>BV/TV</td>
+                                <td>骨体积分数</td>
+                                <td>是骨体积 (BV) 与总体积 (TV) 的比率。<br>注意：几项研究表明，各向异性程度（对结构元素方向的描述）与骨体积分数一起可能解释 3D 结构机械性能的显著部分。</td>
+                                <td>无</td>
+                            </tr>
+                            <tr>
+                                <td>TV</td>
+                                <td>总体积</td>
+                                <td>是所选"填充骨"ROI 的体积，计算如下：<br>TV = (体素体积) × (体素数量)，<br>其中体素体积 = X 间距 × Y 间距 × Z 间距</td>
+                                <td>(默认单位)<sup>3</sup></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab2" class="tab-content">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="abbr">缩写</th>
+                                <th class="measurement">测量</th>
+                                <th class="description">描述</th>
+                                <th class="unit">单位</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ani.MIL*</td>
+                                <td>各向异性 (MIL)</td>
+                                <td>使用平均截距长度 (MIL) 方法计算的小梁架构方向的测量值，从输入的"小梁骨"ROI 计算得出。该方法使用沿各种方向的线性遍历中材料交叉点（骨-髓界面）之间的平均距离。由于 MIL 遍历跨越两种材料，因此结果是一种组合测量，包含两种材料的特征。<br>有关 MIL 方法的更多信息，请参阅 W.J. Whitehouse，各向异性小梁骨的定量形态学，《显微镜杂志》，101, 2, (153–168), (1974)。</td>
+                                <td>无</td>
+                            </tr>
+                            <tr>
+                                <td>Ani.SVD*</td>
+                                <td>各向异性 (SVD)</td>
+                                <td>使用星体积分布 (SVD) 方法的小梁架构方向的测量值，从输入的"小梁骨"ROI 计算得出。在此方法中，通过在感兴趣材料内放置一系列点，然后测量从它们发出的线在各个方向上的长度，直到它们遇到边界，来确定分布。这些线被视为无限小的圆锥体，其顶点位于原点，并在接近材料界面时张成一个立体角。<br>有关 SVD 方法的更多信息，请参阅 L.M. Cruz-Orive, L.M. Karlsson, S.E. Larsen, F. Wainschtein，表征各向异性：一个新概念，《微米和显微镜学报》，23, (75-76), (1992)。</td>
+                                <td>无</td>
+                            </tr>
+                            <tr>
+                                <td>Conn.D***</td>
+                                <td>连接密度</td>
+                                <td>是输入"小梁骨"ROI 连接程度的测量值，按其体积归一化。该测量值计算如下：<br>Conn.D = (1 - 欧拉数) / 小梁骨体积</td>
+                                <td>(默认单位)<sup>-3</sup></td>
+                            </tr>
+                            <tr>
+                                <td>SMI*****</td>
+                                <td>结构模型指数</td>
+                                <td>是小梁相对结构的指标，涉及表面凸曲率的测量。所需输入是"皮质骨"ROI 和"小梁骨"ROI。此外，您可以选择使用 ROI 或网格膨胀，如下所示。对于 ROI 膨胀，骨表面将被膨胀一个体素，而网格膨胀计算为 0.1 × 顶点法线方向上的间距。<br>SMI = 6 × [(S' × V) / S]，其中<br>S' 是膨胀骨表面与初始表面之间的差异，V 是骨体积，S 是骨表面<br>注意：该参数在小梁骨的骨质疏松性退化中很重要，其特征是从板状向杆状架构的过渡。</td>
+                                <td>无</td>
+                            </tr>
+                            <tr>
+                                <td>Tb.N</td>
+                                <td>小梁数量</td>
+                                <td>是每单位长度的平均小梁数量，计算如下：<br>Tb.N = 1 / Tb.Th + Tb.Sp</td>
+                                <td>(默认单位)<sup>-1</sup></td>
+                            </tr>
+                            <tr>
+                                <td>Tb.Sp</td>
+                                <td>平均小梁分离</td>
+                                <td>是小梁之间的平均距离，有时称为小梁间距。<br>注意：较高的 Tb.Sp 与椎骨骨折相关，并且随年龄增长而增加，在腰椎中表现出与年龄的线性依赖关系。</td>
+                                <td>(默认单位)</td>
+                            </tr>
+                            <tr>
+                                <td>Tb.Th****</td>
+                                <td>平均小梁厚度</td>
+                                <td>是输入"小梁骨"ROI 的平均厚度，其中一点的厚度是适合结构内且包含该点的最大球体的直径。平均值直接从结果厚度图中的值计算。<br>注意：处理时间取决于计算区域的大小，如果处理时间过长，您可以考虑减少区域。</td>
+                                <td>(默认单位)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab3" class="tab-content">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="abbr">缩写</th>
+                                <th class="measurement">测量</th>
+                                <th class="description">描述</th>
+                                <th class="unit">单位</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>BMD.Me**</td>
+                                <td>骨矿物质密度<br>(小梁骨 + 髓腔)</td>
+                                <td>是为对应于小梁骨和髓腔的经校准骨数据计算的骨矿物质密度 (BMD) 的平均强度。<br>注意：此参数与混合骨-软组织区域有关。有关骨本身矿物质密度的测量，请参阅 TMD.BV 和 TMD.Co。</td>
+                                <td>mg.cm<sup>-3</sup></td>
+                            </tr>
+                            <tr>
+                                <td>TMD.BV**</td>
+                                <td>组织矿物质密度<br>(骨体积)</td>
+                                <td>是为对应于输入皮质骨和小梁骨区域的经校准骨数据计算的组织矿物质密度 (TMD) 的平均强度。与 BMD 相比，组织矿物质密度 (TMD) 提供有关骨本身材料密度的信息，而忽略周围的软组织。</td>
+                                <td>mg.cm<sup>-3</sup></td>
+                            </tr>
+                            <tr>
+                                <td>TMD.Co**</td>
+                                <td>组织矿物质密度<br>(皮质骨)</td>
+                                <td>是为对应于皮质骨 ROI 的经校准骨数据计算的组织矿物质密度 (TMD) 的平均强度。与 BMD 相比，组织矿物质密度 (TMD) 提供有关骨本身材料密度的信息，而忽略周围的软组织。</td>
+                                <td>mg.cm<sup>-3</sup></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <h2>计算方法选项</h2>
+        <p>对于某些测量，您可以选择不同的计算方法：</p>
+
+        <div class="note-box">
+            <h3>骨表面计算方法</h3>
+            <div class="radio-option">
+                <input type="radio" id="marching-cube" name="bs-method" checked>
+                <label for="marching-cube">行进立方体方法</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="weighted-voxel" name="bs-method">
+                <label for="weighted-voxel">加权体素估计</label>
+            </div>
+        </div>
+
+        <div class="note-box">
+            <h3>结构模型指数计算方法</h3>
+            <div class="radio-option">
+                <input type="radio" id="mesh-dilation" name="smi-method" checked>
+                <label for="mesh-dilation">使用网格膨胀</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="roi-dilation" name="smi-method">
+                <label for="roi-dilation">使用 ROI 膨胀</label>
+            </div>
+        </div>
+
+        <button class="btn">导出到 CSV</button>
+
+        <div class="footnote">
+            <p>* 各向异性程度，用 MIL 或 SVD 方法计算，是衡量体积内亚结构定向程度的指标。小梁骨根据机械负荷改变其方向，可能变得各向异性。对于各向同性（完全定向）系统，各向异性程度 (DA) 等于 0。随着系统变得更加各向异性（定向性降低），DA 增加到小于或等于 1 的值。</p>
+            
+            <p>** 骨矿物质密度 (BMD) 和组织矿物质密度 (TMD) 定义为生物组织中羟基磷灰石 (CaHA) 的体积密度，单位为 mg.cm<sup>-3</sup>。这些测量通过具有已知 CaHA 密度值的模体进行校准（请参见 <a href="#">BMD 和 TMD 计算的强度校准</a>）。</p>
+            
+            <p>*** 有关计算 Conn.D 的信息，请参阅 A. Odgaard 和 H. J. Gundersen，海绵骨连接的量化，特别强调 3-D 重建，《骨》第 14 卷，2 (1993): 173-82 (doi:10.1016/8756-3282(93)90245-6)。</p>
+            
+            <p>**** 有关局部厚度测量的实现的更多信息，请参阅 R. Dougherty 和 K.-H. Kunzelmann，用 ImageJ 计算 3D 结构的局部厚度，《显微镜和微观分析》，第 13 卷，第 S02 期，第 1678–1679 页，2007 年 (doi:10.1017/S1431927607074430)。</p>
+            
+            <p>***** 有关 SMI 的更多信息，请参阅 T. Hildebrand 和 P. Ruegsegge，用结构模型指数量化骨微架构，《计算方法生物力学生物医学工程》。1997; 1: 15–23。</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Comet Technologies Canada Inc. 保留所有权利。</p>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            // 获取所有标签内容并隐藏
+            var tabContent = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContent.length; i++) {
+                tabContent[i].className = tabContent[i].className.replace(" active", "");
+            }
+
+            // 移除所有标签按钮的活动状态
+            var tabs = document.getElementsByClassName("tab");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].className = tabs[i].className.replace(" active", "");
+            }
+
+            // 显示当前标签内容并添加活动类名
+            document.getElementById(tabName).className += " active";
+            evt.currentTarget.className += " active";
+        }
+
+        // 页面加载时的平滑效果
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            setTimeout(function() {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
